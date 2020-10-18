@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+//bring in the screen class to use in the main file
+import './screens/inventory_overview_screen.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -7,22 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter App',
-      home: MyHomePage(),
+      home: InventoryOverviewScreen(),
     );
   }
 }
-
-class MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('To Do App'),
-      ),
-      body: Center(
-        child: Text('To Do list main'),
-      ),
-    );
-  }
-}
-//test

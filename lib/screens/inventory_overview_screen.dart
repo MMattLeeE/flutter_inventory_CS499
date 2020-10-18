@@ -1,9 +1,10 @@
-import 'dart:html';
+//import 'dart:html';
 
 import 'package:flutter/material.dart';
 
 //importing the inventory.dart model class
 import '../models/inventory.dart';
+import '../widgets/inventory_item.dart';
 
 class InventoryOverviewScreen extends StatelessWidget {
   final List<Inventory> loadedInventory = [
@@ -50,8 +51,11 @@ class InventoryOverviewScreen extends StatelessWidget {
       body: GridView.builder(
         padding: const EdgeInsets.all(10.0),
         itemCount: loadedInventory.length,
-        itemBuilder: (ctx, i) =>
-            Container(), //define how every gridcell is built
+        itemBuilder: (ctx, i) => InventoryItem(
+          loadedInventory[i].id,
+          loadedInventory[i].title,
+          loadedInventory[i].imageUrl,
+        ), //define how every gridcell is built
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 1, //number of columns
           childAspectRatio: 3 / 2,
