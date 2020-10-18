@@ -17,10 +17,10 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('flutter app'),
+        title: Text('To Do App'),
       ),
       body: Center(
-        child: Text('hello'),
+        child: Text('To Do list main'),
       ),
     );
   }
