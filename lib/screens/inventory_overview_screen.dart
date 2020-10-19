@@ -1,5 +1,3 @@
-//import 'dart:html';
-
 import 'package:flutter/material.dart';
 
 //importing the inventory.dart model class
@@ -55,10 +53,11 @@ class InventoryOverviewScreen extends StatelessWidget {
           loadedInventory[i].id,
           loadedInventory[i].title,
           loadedInventory[i].imageUrl,
+          loadedInventory[i].count,
         ), //define how every gridcell is built
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 1, //number of columns
-          childAspectRatio: 3 / 2,
+          childAspectRatio: 6 / 2,
           crossAxisSpacing: 10, //spacing between columns
           mainAxisSpacing: 10, //spacing between rows
         ),
