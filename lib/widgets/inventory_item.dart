@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../screens/inventory_edit_screen.dart';
 //Each individual inventory Item and how to render it. This case using a
 //GridTile. The InventoryItem is instantiated in the
 //inventory_overview_screen.dart in the GridView for each grid Item
@@ -48,9 +49,15 @@ class InventoryItem extends StatelessWidget {
         ),
       ),
       footer: Container(
+        //edit button
         alignment: Alignment.centerLeft,
         child: TextButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushNamed(
+              InventoryEditScreen.routeName,
+              arguments: id,
+            );
+          },
           child: Text('Edit'),
         ),
       ),

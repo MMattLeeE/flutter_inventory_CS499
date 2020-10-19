@@ -2,7 +2,7 @@
 import 'package:flutter/foundation.dart';
 
 //basic class that represents an inventory item
-class Inventory {
+class Inventory with ChangeNotifier {
   final String id;
   final String title;
   final String description;
