@@ -13,9 +13,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //wrapping the widget with a change notifier
-    return ChangeNotifierProvider(
+    return ChangeNotifierProvider.value(
       // return a inventory provider instance
-      create: (ctx) => InventoryProvider(),
+      value: InventoryProvider(),
       child: MaterialApp(
         title: 'Flutter App',
         theme: ThemeData(

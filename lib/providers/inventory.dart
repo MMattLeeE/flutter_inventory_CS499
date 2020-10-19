@@ -6,8 +6,8 @@ class Inventory with ChangeNotifier {
   final String id;
   final String title;
   final String description;
-  final int count;
   final String imageUrl;
+  int count;
   bool isFavorite; //changeable tied to a button the user clicks
 
   //constructor to instantiate
@@ -15,8 +15,20 @@ class Inventory with ChangeNotifier {
     @required this.id,
     @required this.title,
     @required this.description,
-    @required this.count,
     @required this.imageUrl,
+    @required this.count,
     this.isFavorite = false,
   });
+
+  void incrementCount() {
+    count++;
+    notifyListeners();
+  }
+
+  void decrementCount() {
+    if (count > 0) {
+      count--;
+      notifyListeners();
+    }
+  }
 }

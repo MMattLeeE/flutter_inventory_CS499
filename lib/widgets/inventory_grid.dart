@@ -1,9 +1,9 @@
 import 'package:app_2/providers/inventory_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/inventory_item.dart';
 import '../providers/inventory_provider.dart';
-import 'package:provider/provider.dart';
 
 // the overview screen contains the InventoryGrid widget;
 // the InventoryGrid is made up of InventoryItems widgets
@@ -19,11 +19,15 @@ class InventoryGrid extends StatelessWidget {
     return GridView.builder(
       padding: const EdgeInsets.all(10.0),
       itemCount: inventory.length,
-      itemBuilder: (ctx, i) => InventoryItem(
-        inventory[i].id,
-        inventory[i].title,
-        inventory[i].imageUrl,
-        inventory[i].count,
+      itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+        //create: (c) => inventory[i],
+        value: inventory[i],
+        child: InventoryItem(
+            // inventory[i].id,
+            // inventory[i].title,
+            // inventory[i].imageUrl,
+            // inventory[i].count,
+            ),
       ), //define how every gridcell is built
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 1, //number of columns
