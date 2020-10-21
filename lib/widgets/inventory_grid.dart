@@ -22,12 +22,7 @@ class InventoryGrid extends StatelessWidget {
       itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
         //create: (c) => inventory[i],
         value: inventory[i],
-        child: InventoryItem(
-            // inventory[i].id,
-            // inventory[i].title,
-            // inventory[i].imageUrl,
-            // inventory[i].count,
-            ),
+        child: InventoryItem(),
       ), //define how every gridcell is built
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 1, //number of columns

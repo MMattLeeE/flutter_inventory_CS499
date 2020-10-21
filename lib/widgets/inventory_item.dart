@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../screens/inventory_edit_screen.dart';
 import '../providers/inventory.dart';
+import '../providers/inventory_provider.dart';
 //Each individual inventory Item and how to render it. This case using a
 //GridTile. The InventoryItem is instantiated in the
 //inventory_overview_screen.dart in the GridView for each grid Item
@@ -27,7 +28,10 @@ class InventoryItem extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.delete_rounded),
               iconSize: 32.0,
-              onPressed: () {},
+              onPressed: () {
+                Provider.of<InventoryProvider>(context, listen: false)
+                    .deleteInventory(inventory.id);
+              },
             ),
             IconButton(
               icon: Icon(Icons.arrow_upward),

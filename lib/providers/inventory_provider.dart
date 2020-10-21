@@ -47,8 +47,26 @@ class InventoryProvider with ChangeNotifier {
     return _items.firstWhere((inventory) => inventory.id == id);
   }
 
-  void addInventory() {
-    //_items.add(value);
+  void addInventory(Inventory inventory) {
+    final newInventory = Inventory(
+      id: DateTime.now().toString(),
+      title: inventory.title,
+      count: inventory.count,
+      description: inventory.description,
+      imageUrl: inventory.imageUrl,
+    );
+    _items.insert(0, newInventory);
+    notifyListeners();
+  }
+
+  void updateInventory(String id, Inventory newInventory) {
+    final inventoryIndex = _items.indexWhere((inventory) => inventory.id == id);
+    _items[inventoryIndex] = newInventory;
+    notifyListeners();
+  }
+
+  void deleteInventory(String id) {
+    _items.removeWhere((element) => element.id == id);
     notifyListeners();
   }
 }

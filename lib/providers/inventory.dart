@@ -5,19 +5,19 @@ import 'package:flutter/foundation.dart';
 class Inventory with ChangeNotifier {
   final String id;
   final String title;
+  int count;
   final String description;
   final String imageUrl;
-  int count;
-  bool isFavorite; //changeable tied to a button the user clicks
+  //bool isFavorite; //changeable tied to a button the user clicks
 
   //constructor to instantiate
   Inventory({
     @required this.id,
     @required this.title,
+    @required this.count,
     @required this.description,
     @required this.imageUrl,
-    @required this.count,
-    this.isFavorite = false,
+    //this.isFavorite = false,
   });
 
   void incrementCount() {
