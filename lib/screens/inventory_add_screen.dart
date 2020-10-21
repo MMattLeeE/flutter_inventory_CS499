@@ -26,7 +26,7 @@ class _InventoryAddScreenState extends State<InventoryAddScreen> {
   );
   var _loading = false;
 
-  void _submit() {
+  Future<void> _submit() async {
     final noError = _form.currentState.validate();
     if (!noError) {
       return;
@@ -35,14 +35,31 @@ class _InventoryAddScreenState extends State<InventoryAddScreen> {
     setState(() {
       _loading = true;
     });
-    Provider.of<InventoryProvider>(context, listen: false)
-        .addInventory(_editedInventory)
-        .then((_) {
+    try {
+      await Provider.of<InventoryProvider>(context, listen: false)
+          .addInventory(_editedInventory);
+    } catch (error) {
+      await showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text('Error occured'),
+          content: Text('Something went wrong.'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+            )
+          ],
+        ),
+      );
+    } finally {
       setState(() {
-        _loading = true;
+        _loading = false;
       });
       Navigator.of(context).pop();
-    });
+    }
   }
 
   @override

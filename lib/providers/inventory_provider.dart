@@ -48,21 +48,29 @@ class InventoryProvider with ChangeNotifier {
     return _items.firstWhere((inventory) => inventory.id == id);
   }
 
-  Future<void> addInventory(Inventory inventory) {
+  Future<void> refreshInventory() async {
+    const url = 'https://inventory-171de.firebaseio.com/inventory.json';
+    try {
+      final response = await http.get(url);
+    } catch (error) {
+      throw (error);
+    }
+  }
+
+  Future<void> addInventory(Inventory inventory) async {
     // firebase will build a collection for you based on the
     //  url endpoint in the request. Must send JSON.
     const url = 'https://inventory-171de.firebaseio.com/inventory.json';
-    return http
-        .post(
-      url,
-      body: json.encode({
-        'title': inventory.title,
-        'count': inventory.count,
-        'description': inventory.description,
-        'imageUrl': inventory.imageUrl,
-      }),
-    )
-        .then((response) {
+    try {
+      final response = await http.post(
+        url,
+        body: json.encode({
+          'title': inventory.title,
+          'count': inventory.count,
+          'description': inventory.description,
+          'imageUrl': inventory.imageUrl,
+        }),
+      );
       final newInventory = Inventory(
         id: json.decode(response.body)['name'],
         title: inventory.title,
@@ -72,10 +80,13 @@ class InventoryProvider with ChangeNotifier {
       );
       _items.insert(0, newInventory);
       notifyListeners();
-    });
+    } catch (error) {
+      print(error);
+      throw error;
+    }
   }
 
-  void updateInventory(String id, Inventory newInventory) {
+  Future<void> updateInventory(String id, Inventory newInventory) async {
     final inventoryIndex = _items.indexWhere((inventory) => inventory.id == id);
     _items[inventoryIndex] = newInventory;
     notifyListeners();
