@@ -28,7 +28,7 @@ class InventoryItem extends StatelessWidget {
           right: 10,
         ),
         child: GridTileBar(
-          backgroundColor: Colors.grey,
+          backgroundColor: Theme.of(context).backgroundColor,
           trailing: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
