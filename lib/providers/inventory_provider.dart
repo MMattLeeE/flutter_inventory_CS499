@@ -6,40 +6,7 @@ import 'package:flutter/material.dart';
 import './inventory.dart';
 
 class InventoryProvider with ChangeNotifier {
-  List<Inventory> _items = [
-    // Inventory(
-    //   id: 'p1',
-    //   title: 'Test Shirt',
-    //   description: 'A test shirt - it is pretty test!',
-    //   count: 29,
-    //   imageUrl:
-    //       'https://cdn.pixabay.com/photo/2016/10/02/22/17/red-t-shirt-1710578_1280.jpg',
-    // ),
-    // Inventory(
-    //   id: 'p2',
-    //   title: 'Trousers',
-    //   description: 'A nice pair of trousers.',
-    //   count: 59,
-    //   imageUrl:
-    //       'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Trousers%2C_dress_%28AM_1960.022-8%29.jpg/512px-Trousers%2C_dress_%28AM_1960.022-8%29.jpg',
-    // ),
-    // Inventory(
-    //   id: 'p3',
-    //   title: 'Yellow Scarf',
-    //   description: 'Warm and cozy - exactly what you need for the winter.',
-    //   count: 19,
-    //   imageUrl:
-    //       'https://live.staticflickr.com/4043/4438260868_cc79b3369d_z.jpg',
-    // ),
-    // Inventory(
-    //   id: 'p4',
-    //   title: 'A Pan',
-    //   description: 'Prepare any meal you want.',
-    //   count: 49,
-    //   imageUrl:
-    //       'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
-    // ),
-  ];
+  List<Inventory> _items = [];
 
   List<Inventory> get items {
     return [..._items];
@@ -108,11 +75,21 @@ class InventoryProvider with ChangeNotifier {
 
   Future<void> updateInventory(String id, Inventory newInventory) async {
     final inventoryIndex = _items.indexWhere((inventory) => inventory.id == id);
+    final url = 'https://inventory-171de.firebaseio.com/inventory/$id.json';
+    await http.patch(url,
+        body: json.encode({
+          'title': newInventory.title,
+          'count': newInventory.count,
+          'description': newInventory.description,
+          'imageUrl': newInventory.imageUrl,
+        }));
     _items[inventoryIndex] = newInventory;
     notifyListeners();
   }
 
   void deleteInventory(String id) {
+    final url = 'https://inventory-171de.firebaseio.com/inventory/$id.json';
+    http.delete(url);
     _items.removeWhere((element) => element.id == id);
     notifyListeners();
   }

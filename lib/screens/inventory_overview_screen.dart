@@ -13,30 +13,37 @@ class InventoryOverviewScreen extends StatefulWidget {
 }
 
 class _InventoryOverviewScreenState extends State<InventoryOverviewScreen> {
-  // var _isInit = true;
+  var _isLoading = false;
+  var _isInit = true;
+
   @override
   void initState() {
-    Future.delayed(Duration.zero).then((_) {
-      Provider.of<InventoryProvider>(context, listen: false).refreshInventory();
-    });
     super.initState();
   }
 
-  // @override
-  // void didChangeDependencies() {
-  //   if (!_isInit) {
-  //     Provider.of<InventoryProvider>(context).refreshInventory();
-  //   }
-  //   _isInit = false;
-  //   super.didChangeDependencies();
-  // }
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<InventoryProvider>(context, listen: false)
+          .refreshInventory()
+          .then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Inventory List' +
-            Provider.of<InventoryProvider>(context).items.length.toString()),
+        title: Text('Inventory List'),
         actions: <Widget>[
           // add inventory button
           IconButton(
@@ -48,7 +55,11 @@ class _InventoryOverviewScreenState extends State<InventoryOverviewScreen> {
           ),
         ],
       ),
-      body: InventoryGrid(),
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : InventoryGrid(),
     );
   }
 }
