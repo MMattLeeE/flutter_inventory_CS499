@@ -37,7 +37,7 @@ class _InventoryEditScreenState extends State<InventoryEditScreen> {
     });
     try {
       await Provider.of<InventoryProvider>(context, listen: false)
-          .updateInventory(_editedInventory);
+          .updateInventory(_editedInventory.id, _editedInventory);
     } catch (error) {
       await showDialog(
         context: context,
