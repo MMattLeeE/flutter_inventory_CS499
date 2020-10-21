@@ -17,7 +17,7 @@ class InventoryGrid extends StatelessWidget {
     final inventory = inventoryData.items;
 
     return GridView.builder(
-      padding: const EdgeInsets.all(10.0),
+      // padding: const EdgeInsets.all(10.0),
       itemCount: inventory.length,
       itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
         //create: (c) => inventory[i],
@@ -27,8 +27,8 @@ class InventoryGrid extends StatelessWidget {
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 1, //number of columns
         childAspectRatio: 6 / 2,
-        crossAxisSpacing: 10, //spacing between columns
-        mainAxisSpacing: 10, //spacing between rows
+        // crossAxisSpacing: 30, //spacing between columns
+        mainAxisSpacing: 0, //spacing between rows
       ),
     );
   }
