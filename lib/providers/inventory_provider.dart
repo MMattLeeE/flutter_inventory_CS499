@@ -1,5 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import './inventory.dart';
 
@@ -8,7 +9,7 @@ class InventoryProvider with ChangeNotifier {
     Inventory(
       id: 'p1',
       title: 'Test Shirt',
-      description: 'A red shirt - it is pretty red!',
+      description: 'A test shirt - it is pretty test!',
       count: 29,
       imageUrl:
           'https://cdn.pixabay.com/photo/2016/10/02/22/17/red-t-shirt-1710578_1280.jpg',
@@ -47,16 +48,31 @@ class InventoryProvider with ChangeNotifier {
     return _items.firstWhere((inventory) => inventory.id == id);
   }
 
-  void addInventory(Inventory inventory) {
-    final newInventory = Inventory(
-      id: DateTime.now().toString(),
-      title: inventory.title,
-      count: inventory.count,
-      description: inventory.description,
-      imageUrl: inventory.imageUrl,
-    );
-    _items.insert(0, newInventory);
-    notifyListeners();
+  Future<void> addInventory(Inventory inventory) {
+    // firebase will build a collection for you based on the
+    //  url endpoint in the request. Must send JSON.
+    const url = 'https://inventory-171de.firebaseio.com/inventory.json';
+    return http
+        .post(
+      url,
+      body: json.encode({
+        'title': inventory.title,
+        'count': inventory.count,
+        'description': inventory.description,
+        'imageUrl': inventory.imageUrl,
+      }),
+    )
+        .then((response) {
+      final newInventory = Inventory(
+        id: json.decode(response.body)['name'],
+        title: inventory.title,
+        count: inventory.count,
+        description: inventory.description,
+        imageUrl: inventory.imageUrl,
+      );
+      _items.insert(0, newInventory);
+      notifyListeners();
+    });
   }
 
   void updateInventory(String id, Inventory newInventory) {
