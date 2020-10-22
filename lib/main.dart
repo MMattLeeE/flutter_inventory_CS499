@@ -22,23 +22,30 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: Auth(),
         ),
-        ChangeNotifierProvider(
-          // return a inventory provider instance
-          create: (ctx) => InventoryProvider(),
+        ChangeNotifierProxyProvider<Auth, InventoryProvider>(
+          // proxyProvider depends on the previous provider in the list
+          // auth provider. Bring the Auth provider into this one. If auth
+          // provider has any changes, this one also updates
+          create: null,
+          update: (ctx, auth, prevInventory) => InventoryProvider(
+            auth.token,
+            prevInventory == null ? [] : prevInventory.items,
+          ),
         ),
       ],
-      child: MaterialApp(
-        title: 'Inventory App',
-        theme: ThemeData(
-          primarySwatch: Colors.orange,
-          accentColor: Colors.blue,
-        ),
-        home: AuthScreen(),
-        routes: {
-          // /inventory_edit
-          InventoryEditScreen.routeName: (ctx) => InventoryEditScreen(),
-          InventoryAddScreen.routeName: (ctx) => InventoryAddScreen(),
-        },
+      child: Consumer<Auth>(
+        builder: (ctx, auth, _) => MaterialApp(
+            title: 'Inventory App',
+            theme: ThemeData(
+              primarySwatch: Colors.orange,
+              accentColor: Colors.blue,
+            ),
+            home: auth.isAuth ? InventoryOverviewScreen() : AuthScreen(),
+            routes: {
+              // /inventory_edit
+              InventoryEditScreen.routeName: (ctx) => InventoryEditScreen(),
+              InventoryAddScreen.routeName: (ctx) => InventoryAddScreen(),
+            }),
       ),
     );
   }

@@ -6,6 +6,12 @@ import 'package:flutter/material.dart';
 import './inventory.dart';
 
 class InventoryProvider with ChangeNotifier {
+  final String authToken;
+
+  //to not lose the previously loaded items list, pass it into constructor
+  //so on rebuilds it gets retained. Seen in proxy provider in main.dart
+  InventoryProvider(this.authToken, this._items);
+
   List<Inventory> _items = [];
 
   List<Inventory> get items {
@@ -17,7 +23,8 @@ class InventoryProvider with ChangeNotifier {
   }
 
   Future<void> refreshInventory() async {
-    const url = 'https://inventory-171de.firebaseio.com/inventory.json';
+    final url =
+        'https://inventory-171de.firebaseio.com/inventory.json?auth=$authToken';
     try {
       final response = await http.get(url);
 
@@ -47,7 +54,8 @@ class InventoryProvider with ChangeNotifier {
   Future<void> addInventory(Inventory inventory) async {
     // firebase will build a collection for you based on the
     //  url endpoint in the request. Must send JSON.
-    const url = 'https://inventory-171de.firebaseio.com/inventory.json';
+    final url =
+        'https://inventory-171de.firebaseio.com/inventory.json?auth=$authToken';
     try {
       final response = await http.post(
         url,
@@ -75,7 +83,8 @@ class InventoryProvider with ChangeNotifier {
 
   Future<void> updateInventory(String id, Inventory newInventory) async {
     final inventoryIndex = _items.indexWhere((inventory) => inventory.id == id);
-    final url = 'https://inventory-171de.firebaseio.com/inventory/$id.json';
+    final url =
+        'https://inventory-171de.firebaseio.com/inventory/$id.json?auth=$authToken';
     await http.patch(url,
         body: json.encode({
           'title': newInventory.title,
@@ -88,7 +97,8 @@ class InventoryProvider with ChangeNotifier {
   }
 
   void deleteInventory(String id) {
-    final url = 'https://inventory-171de.firebaseio.com/inventory/$id.json';
+    final url =
+        'https://inventory-171de.firebaseio.com/inventory/$id.json?auth=$authToken';
     http.delete(url);
     _items.removeWhere((element) => element.id == id);
     notifyListeners();

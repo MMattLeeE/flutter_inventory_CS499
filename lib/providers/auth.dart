@@ -7,6 +7,21 @@ class Auth with ChangeNotifier {
   DateTime _expiryDate;
   String _userId;
 
+  // if there is an auth token and it isnt expired user is authenticated
+  bool get isAuth {
+    return token != null;
+  }
+
+  //return the token if user has token and it isnt expired
+  String get token {
+    if (_expiryDate != null &&
+        _expiryDate.isAfter(DateTime.now()) &&
+        _token != null) {
+      return _token;
+    }
+    return null;
+  }
+
   Future<void> _authenticate(
       String email, String password, String urlText) async {
     final url =
@@ -22,6 +37,20 @@ class Auth with ChangeNotifier {
         },
       ),
     );
+    final responseData = json.decode(response.body);
+    //setting token and other fields from response. Documentation:
+    // https://firebase.google.com/docs/reference/rest/auth#section-create-email-password
+    _token = responseData['idToken'];
+    _userId = responseData['localId'];
+    // convert expiration string of seconds and add to current time
+    _expiryDate = DateTime.now().add(
+      Duration(
+        seconds: int.parse(
+          responseData['expiresIn'],
+        ),
+      ),
+    );
+    notifyListeners();
   }
 
   Future<void> signup(String email, String password) async {
