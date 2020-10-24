@@ -1,5 +1,7 @@
 //decorator for requiring fields in constructor
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 //basic class that represents an inventory item
 class Inventory with ChangeNotifier {
@@ -20,15 +22,31 @@ class Inventory with ChangeNotifier {
     //this.isFavorite = false,
   });
 
-  void incrementCount() {
+  Future<void> incrementCount(String authToken) async {
     count++;
     notifyListeners();
+    final url =
+        'https://inventory-171de.firebaseio.com/inventory/$id.json?auth=$authToken';
+    await http.patch(
+      url,
+      body: json.encode({
+        'count': count,
+      }),
+    );
   }
 
-  void decrementCount() {
+  Future<void> decrementCount(String authToken) async {
     if (count > 0) {
       count--;
       notifyListeners();
+      final url =
+          'https://inventory-171de.firebaseio.com/inventory/$id.json?auth=$authToken';
+      await http.patch(
+        url,
+        body: json.encode({
+          'count': count,
+        }),
+      );
     }
   }
 }

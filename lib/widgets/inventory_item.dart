@@ -4,21 +4,16 @@ import 'package:provider/provider.dart';
 import '../screens/inventory_edit_screen.dart';
 import '../providers/inventory.dart';
 import '../providers/inventory_provider.dart';
+import '../providers/auth.dart';
 //Each individual inventory Item and how to render it. This case using a
 //GridTile. The InventoryItem is instantiated in the
 //inventory_overview_screen.dart in the GridView for each grid Item
 
 class InventoryItem extends StatelessWidget {
-  // final String id;
-  // final String title;
-  // final String imageUrl;
-  // final int count;
-
-  // InventoryItem(this.id, this.title, this.imageUrl, this.count);
-
   @override
   Widget build(BuildContext context) {
     final inventory = Provider.of<Inventory>(context);
+    final authInfo = Provider.of<Auth>(context, listen: false);
     return GridTile(
       child: Padding(
         padding: EdgeInsets.only(
@@ -44,14 +39,14 @@ class InventoryItem extends StatelessWidget {
                 icon: Icon(Icons.arrow_upward),
                 iconSize: 32.0,
                 onPressed: () {
-                  inventory.incrementCount();
+                  inventory.incrementCount(authInfo.token);
                 },
               ),
               IconButton(
                 icon: Icon(Icons.arrow_downward),
                 iconSize: 32.0,
                 onPressed: () {
-                  inventory.decrementCount();
+                  inventory.decrementCount(authInfo.token);
                 },
               ),
               Text(
