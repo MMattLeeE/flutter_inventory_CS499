@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
           create: null,
           update: (ctx, auth, prevInventory) => InventoryProvider(
             auth.token,
+            auth.userId,
             prevInventory == null ? [] : prevInventory.items,
           ),
         ),

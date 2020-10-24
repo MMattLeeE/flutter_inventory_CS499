@@ -7,10 +7,11 @@ import './inventory.dart';
 
 class InventoryProvider with ChangeNotifier {
   final String authToken;
+  final String userId;
 
   //to not lose the previously loaded items list, pass it into constructor
   //so on rebuilds it gets retained. Seen in proxy provider in main.dart
-  InventoryProvider(this.authToken, this._items);
+  InventoryProvider(this.authToken, this.userId, this._items);
 
   List<Inventory> _items = [];
 
@@ -24,7 +25,7 @@ class InventoryProvider with ChangeNotifier {
 
   Future<void> refreshInventory() async {
     final url =
-        'https://inventory-171de.firebaseio.com/inventory.json?auth=$authToken';
+        'https://inventory-171de.firebaseio.com/inventory.json?auth=$authToken&orderBy="ownerId"&equalTo="$userId"';
     try {
       final response = await http.get(url);
 
@@ -60,6 +61,7 @@ class InventoryProvider with ChangeNotifier {
       final response = await http.post(
         url,
         body: json.encode({
+          'ownerId': userId,
           'title': inventory.title,
           'count': inventory.count,
           'description': inventory.description,
