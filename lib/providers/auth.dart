@@ -1,3 +1,4 @@
+import 'package:app_2/secret/secret.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -6,6 +7,7 @@ class Auth with ChangeNotifier {
   String _token;
   DateTime _expiryDate;
   String _userId;
+  String _key = Secret.secret;
 
   // if there is an auth token and it isnt expired user is authenticated
   bool get isAuth {
@@ -29,7 +31,7 @@ class Auth with ChangeNotifier {
   Future<void> _authenticate(
       String email, String password, String urlText) async {
     final url =
-        'https://identitytoolkit.googleapis.com/v1/accounts:$urlText?key=AIzaSyCiyGa1ouC8aUch85YX6DRizWJOEvi_jkA';
+        'https://identitytoolkit.googleapis.com/v1/accounts:$urlText?key=$_key';
 
     final response = await http.post(
       url,
