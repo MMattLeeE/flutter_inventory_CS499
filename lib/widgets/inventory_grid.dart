@@ -13,8 +13,8 @@ class InventoryGrid extends StatelessWidget {
     // the listener to the provider if there is one up the widget tree
     // only this and its children rebuild. Inventory grabbing an instance
     // of InventoryProvider through the context
-    final inventoryData = Provider.of<InventoryProvider>(context);
-    final inventory = inventoryData.items;
+    var inventoryData = Provider.of<InventoryProvider>(context);
+    var inventory = inventoryData.items;
 
     return GridView.builder(
       // padding: const EdgeInsets.all(10.0),

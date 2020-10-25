@@ -22,7 +22,7 @@ class _InventoryAddScreenState extends State<InventoryAddScreen> {
     title: '',
     count: 0,
     description: '',
-    imageUrl: '',
+    //imageUrl: '',
   );
   var _loading = false;
 
@@ -106,7 +106,7 @@ class _InventoryAddScreenState extends State<InventoryAddScreen> {
                           title: value,
                           count: _editedInventory.count,
                           description: _editedInventory.description,
-                          imageUrl: _editedInventory.imageUrl,
+                          //imageUrl: _editedInventory.imageUrl,
                         );
                       },
                     ),
@@ -137,7 +137,7 @@ class _InventoryAddScreenState extends State<InventoryAddScreen> {
                           title: _editedInventory.title,
                           count: int.parse(value),
                           description: _editedInventory.description,
-                          imageUrl: _editedInventory.imageUrl,
+                          //imageUrl: _editedInventory.imageUrl,
                         );
                       },
                     ),
@@ -159,38 +159,38 @@ class _InventoryAddScreenState extends State<InventoryAddScreen> {
                           title: _editedInventory.title,
                           count: _editedInventory.count,
                           description: value,
-                          imageUrl: _editedInventory.imageUrl,
+                          // imageUrl: _editedInventory.imageUrl,
                         );
                       },
                     ),
-                    TextFormField(
-                      decoration: InputDecoration(labelText: 'Image URL'),
-                      keyboardType: TextInputType.url,
-                      textInputAction: TextInputAction.done,
-                      focusNode: _imageUrlFocusNode,
-                      onFieldSubmitted: (_) {
-                        _submit();
-                      },
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Enter a Image Url';
-                        }
-                        if (!value.startsWith('http') &&
-                            !value.startsWith('https')) {
-                          return 'Enter a valid URL';
-                        }
-                        return null;
-                      },
-                      onSaved: (value) {
-                        _editedInventory = Inventory(
-                          id: null,
-                          title: _editedInventory.title,
-                          count: _editedInventory.count,
-                          description: _editedInventory.description,
-                          imageUrl: value,
-                        );
-                      },
-                    ),
+                    // TextFormField(
+                    //   decoration: InputDecoration(labelText: 'Image URL'),
+                    //   keyboardType: TextInputType.url,
+                    //   textInputAction: TextInputAction.done,
+                    //   focusNode: _imageUrlFocusNode,
+                    //   onFieldSubmitted: (_) {
+                    //     _submit();
+                    //   },
+                    //   validator: (value) {
+                    //     if (value.isEmpty) {
+                    //       return 'Enter a Image Url';
+                    //     }
+                    //     if (!value.startsWith('http') &&
+                    //         !value.startsWith('https')) {
+                    //       return 'Enter a valid URL';
+                    //     }
+                    //     return null;
+                    //   },
+                    //   onSaved: (value) {
+                    //     _editedInventory = Inventory(
+                    //       id: null,
+                    //       title: _editedInventory.title,
+                    //       count: _editedInventory.count,
+                    //       description: _editedInventory.description,
+                    //       //imageUrl: value,
+                    //     );
+                    //   },
+                    // ),
                   ],
                 ),
               ),

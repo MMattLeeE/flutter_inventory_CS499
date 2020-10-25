@@ -8,15 +8,18 @@ import './inventory.dart';
 class InventoryProvider with ChangeNotifier {
   final String authToken;
   final String userId;
-
+  List<Inventory> _items = [];
+  List<Inventory> _baseItems = [];
   //to not lose the previously loaded items list, pass it into constructor
   //so on rebuilds it gets retained. Seen in proxy provider in main.dart
-  InventoryProvider(this.authToken, this.userId, this._items);
-
-  List<Inventory> _items = [];
+  InventoryProvider(this.authToken, this.userId, this._items, this._baseItems);
 
   List<Inventory> get items {
     return [..._items];
+  }
+
+  List<Inventory> get baseItems {
+    return [..._baseItems];
   }
 
   Inventory findById(String id) {
@@ -39,12 +42,15 @@ class InventoryProvider with ChangeNotifier {
             title: invData["title"],
             count: invData["count"],
             description: invData["description"],
-            imageUrl: invData["imageUrl"],
+            // imageUrl: invData["imageUrl"],
           ),
         );
       });
 
       _items = loadedInv;
+      _baseItems = loadedInv;
+      print(_baseItems);
+      print(_items);
       //print(_items[1].title);
       notifyListeners();
     } catch (error) {
@@ -65,7 +71,7 @@ class InventoryProvider with ChangeNotifier {
           'title': inventory.title,
           'count': inventory.count,
           'description': inventory.description,
-          'imageUrl': inventory.imageUrl,
+          //'imageUrl': inventory.imageUrl,
         }),
       );
       final newInventory = Inventory(
@@ -73,7 +79,7 @@ class InventoryProvider with ChangeNotifier {
         title: inventory.title,
         count: inventory.count,
         description: inventory.description,
-        imageUrl: inventory.imageUrl,
+        //imageUrl: inventory.imageUrl,
       );
       _items.insert(0, newInventory);
       notifyListeners();
@@ -92,7 +98,7 @@ class InventoryProvider with ChangeNotifier {
           'title': newInventory.title,
           'count': newInventory.count,
           'description': newInventory.description,
-          'imageUrl': newInventory.imageUrl,
+          //'imageUrl': newInventory.imageUrl,
         }));
     _items[inventoryIndex] = newInventory;
     notifyListeners();
@@ -103,6 +109,24 @@ class InventoryProvider with ChangeNotifier {
         'https://inventory-171de.firebaseio.com/inventory/$id.json?auth=$authToken';
     http.delete(url);
     _items.removeWhere((element) => element.id == id);
+    notifyListeners();
+  }
+
+  void searchInventory(String searchText) {
+    //save original item list
+    print("runnning search function");
+    if (searchText.isEmpty) {
+      _items = _baseItems;
+    }
+    if (searchText.isNotEmpty) {
+      List<Inventory> tempList = [];
+      _items.forEach((element) {
+        if (element.title.toLowerCase().contains(searchText.toLowerCase())) {
+          tempList.add(element);
+        }
+      });
+      _items = tempList;
+    }
     notifyListeners();
   }
 }

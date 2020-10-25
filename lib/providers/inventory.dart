@@ -9,7 +9,7 @@ class Inventory with ChangeNotifier {
   final String title;
   int count;
   final String description;
-  final String imageUrl;
+  //final String imageUrl;
   //bool isFavorite; //changeable tied to a button the user clicks
 
   //constructor to instantiate
@@ -18,11 +18,12 @@ class Inventory with ChangeNotifier {
     @required this.title,
     @required this.count,
     @required this.description,
-    @required this.imageUrl,
+    //@required this.imageUrl,
     //this.isFavorite = false,
   });
 
   Future<void> incrementCount(String authToken) async {
+    print("increment count");
     count++;
     notifyListeners();
     final url =

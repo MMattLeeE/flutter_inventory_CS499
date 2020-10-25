@@ -15,10 +15,17 @@ class InventoryOverviewScreen extends StatefulWidget {
 class _InventoryOverviewScreenState extends State<InventoryOverviewScreen> {
   var _isLoading = false;
   var _isInit = true;
+  TextEditingController _controller = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -59,7 +66,21 @@ class _InventoryOverviewScreenState extends State<InventoryOverviewScreen> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : InventoryGrid(),
+          : Column(
+              children: <Widget>[
+                TextField(
+                  controller: _controller,
+                  decoration: InputDecoration(hintText: "Search..."),
+                  onChanged: (String searchText) {
+                    Provider.of<InventoryProvider>(context, listen: false)
+                        .searchInventory(searchText);
+                  },
+                ),
+                Expanded(
+                  child: InventoryGrid(),
+                ),
+              ],
+            ),
     );
   }
 }

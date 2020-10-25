@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
             auth.token,
             auth.userId,
             prevInventory == null ? [] : prevInventory.items,
+            prevInventory == null ? [] : prevInventory.baseItems,
           ),
         ),
       ],
