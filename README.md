@@ -1,16 +1,8 @@
-# app_2
+# Flutter Final Project for CS 499
+This is the completed flutter application.
 
-A new Flutter project.
+The application is composed of several features ported over from the android version of this app: 
+- There is a front end login page
+- An inventory list
+- a back end connected to a firebase realtime database
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
