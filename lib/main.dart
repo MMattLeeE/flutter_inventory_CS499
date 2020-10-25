@@ -44,7 +44,6 @@ class MyApp extends StatelessWidget {
             ),
             home: auth.isAuth ? InventoryOverviewScreen() : AuthScreen(),
             routes: {
-              // /inventory_edit
               InventoryEditScreen.routeName: (ctx) => InventoryEditScreen(),
               InventoryAddScreen.routeName: (ctx) => InventoryAddScreen(),
             }),

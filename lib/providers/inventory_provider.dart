@@ -33,7 +33,7 @@ class InventoryProvider with ChangeNotifier {
       final response = await http.get(url);
 
       final invList = json.decode(response.body) as Map<String, dynamic>;
-      //print(invList.toString());
+
       final List<Inventory> loadedInv = [];
       invList.forEach((invId, invData) {
         loadedInv.add(
@@ -42,16 +42,13 @@ class InventoryProvider with ChangeNotifier {
             title: invData["title"],
             count: invData["count"],
             description: invData["description"],
-            // imageUrl: invData["imageUrl"],
           ),
         );
       });
 
       _items = loadedInv;
       _baseItems = loadedInv;
-      print(_baseItems);
-      print(_items);
-      //print(_items[1].title);
+
       notifyListeners();
     } catch (error) {
       throw (error);
@@ -71,7 +68,6 @@ class InventoryProvider with ChangeNotifier {
           'title': inventory.title,
           'count': inventory.count,
           'description': inventory.description,
-          //'imageUrl': inventory.imageUrl,
         }),
       );
       final newInventory = Inventory(
@@ -79,7 +75,6 @@ class InventoryProvider with ChangeNotifier {
         title: inventory.title,
         count: inventory.count,
         description: inventory.description,
-        //imageUrl: inventory.imageUrl,
       );
       _items.insert(0, newInventory);
       notifyListeners();
@@ -98,7 +93,6 @@ class InventoryProvider with ChangeNotifier {
           'title': newInventory.title,
           'count': newInventory.count,
           'description': newInventory.description,
-          //'imageUrl': newInventory.imageUrl,
         }));
     _items[inventoryIndex] = newInventory;
     notifyListeners();

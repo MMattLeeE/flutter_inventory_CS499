@@ -22,7 +22,6 @@ class _InventoryEditScreenState extends State<InventoryEditScreen> {
     title: '',
     count: 0,
     description: '',
-    //imageUrl: '',
   );
   var _loading = false;
 
@@ -113,7 +112,6 @@ class _InventoryEditScreenState extends State<InventoryEditScreen> {
                           title: value,
                           count: _editedInventory.count,
                           description: _editedInventory.description,
-                          // imageUrl: _editedInventory.imageUrl,
                         );
                       },
                     ),
@@ -145,7 +143,6 @@ class _InventoryEditScreenState extends State<InventoryEditScreen> {
                           title: _editedInventory.title,
                           count: int.parse(value),
                           description: _editedInventory.description,
-                          // imageUrl: _editedInventory.imageUrl,
                         );
                       },
                     ),
@@ -168,39 +165,9 @@ class _InventoryEditScreenState extends State<InventoryEditScreen> {
                           title: _editedInventory.title,
                           count: _editedInventory.count,
                           description: value,
-                          // imageUrl: _editedInventory.imageUrl,
                         );
                       },
                     ),
-                    // TextFormField(
-                    //   decoration: InputDecoration(labelText: 'Image URL'),
-                    //   // initialValue: loadedInventory.imageUrl,
-                    //   keyboardType: TextInputType.url,
-                    //   textInputAction: TextInputAction.done,
-                    //   focusNode: _imageUrlFocusNode,
-                    //   onFieldSubmitted: (_) {
-                    //     _submit();
-                    //   },
-                    //   validator: (value) {
-                    //     if (value.isEmpty) {
-                    //       return 'Enter a Image Url';
-                    //     }
-                    //     if (!value.startsWith('http') &&
-                    //         !value.startsWith('https')) {
-                    //       return 'Enter a valid URL';
-                    //     }
-                    //     return null;
-                    //   },
-                    //   onSaved: (value) {
-                    //     _editedInventory = Inventory(
-                    //       id: inventoryId,
-                    //       title: _editedInventory.title,
-                    //       count: _editedInventory.count,
-                    //       description: _editedInventory.description,
-                    //       // imageUrl: value,
-                    //     );
-                    //   },
-                    // ),
                   ],
                 ),
               ),
