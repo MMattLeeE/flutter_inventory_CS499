@@ -8,7 +8,7 @@ class Auth with ChangeNotifier {
   DateTime _expiryDate;
   String _userId;
   String _key = Secret.secret;
-
+//
   // if there is an auth token and it isnt expired user is authenticated
   bool get isAuth {
     return token != null;
